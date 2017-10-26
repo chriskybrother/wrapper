@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">相册</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">全部相册 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">上传图片</a></li>
+                <li><a href="/newdir">新建相册</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div style="margin-left: 100px">
+    <form action="/doUpload" method="post" enctype="multipart/form-data">
+        <h2>请选择需要上传的文件夹：</h2>
+        <select class="form-control" name="dirName">
+            <%for(var i=0;i<dirs.length;i++){%>
+            <option value="<%=dirs[i]%>"><%=dirs[i]%></option>
+            <%}%>
+        </select>
+        <h2>选择图片：</h2>
+        <input type="file" name="pic"><br>
+        <button type="submit" class="btn btn-default">上传</button>
+    </form>
+</div>
+
+</body>
+</html>
