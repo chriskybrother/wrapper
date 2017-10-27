@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JQuery 实现瀑布流</title>
+<style>
+  body {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #F7F7F7;
+    font-family: '微软雅黑';
+  }
+  
+  .wrapper {
+    padding: 50px;
+  }
+  
+  img {
+    display: block;
+    width: 100%;
+    height: 300px;
+  }
+  
+  .items {
+    position: relative;
+    /* display: flex; */
+    /* 环函 */
+    /* flex-wrap: wrap; */
+  }
+  
+  .item {
+    width: 228px;
+    position: absolute;
+  }
+  
+  .tips {
+    width: 110px;
+    height: 40px;
+    margin: 30px auto 0;
+    text-align: center;
+    line-height: 40px;
+    background-color: #CCC;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .tips.loading {
+    /* background-color: transparent; */
+    background-color: #797979;
+  }
+  </style>
+  <!-- 引入JQ -->
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery.waterfall.js"></script>
+<!-- 导入模板 -->
+<script type="text/javascript" src="../js/template-native.js"></script>
+</head>
+<body>
+  <h2>瀑布流展示</h2>
+  <div class="wrapper">
+  <!-- items作为瀑布流容器，瀑布流宽度固定 -->
+    <div class="items"></div>
+    <p class="tips loading" onclick="getData()">加载更多...</p>
+  </div>
+  <!-- 定义模板 -->
+  <!-- 对key进行遍历 -->
+  <script type="text/template" id="temp01"> 
+  <% for(var i=0;i<key.length;i++){  %>
+    <div class="item">
+      <img src="<%= key[i].path %>">
+      <p><%= key[i].text %></p>
+    </div>
+  <% } %>
+  
+  </script>
+  <!-- ajax获取数据 -->
+  <script type="text/javascript">
+  //定义一个getData()
+  function getData(){
+    //推荐使用$.ajax();
+    // 调用自己的插件 $(".item").waterfall()
+    $.ajax({
+      url:"waterfall.php",
+      dataType:"json",
+      success:function(data){
+        //1。调用模板引擎
+        //2。把内容追加到容器中
+        //3。调用自己的插件
+        var inner=template("temp01",data);
+        //console.log(inner);
+        $(".items").append(inner);
+        $(".items").waterfall(); 
+        
+      }
+    })
+  }
+  </script>
+</body>
+</html>
+
+
